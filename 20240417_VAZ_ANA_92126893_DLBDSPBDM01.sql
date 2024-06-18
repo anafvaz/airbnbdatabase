@@ -5,7 +5,7 @@ CREATE TABLE host (
     first_name VARCHAR(50),
     last_name VARCHAR(50),
     date_of_birth DATE,
-    sarted_hosting DATE);
+    started_hosting DATE);
     
 SELECT * FROM host;     
 
@@ -79,12 +79,9 @@ CREATE TABLE property (
 
 CREATE TABLE photos (
 	photo_id INT PRIMARY KEY AUTO_INCREMENT,
-    photo_url VARCHAR(250) NOT NULL,
+    photo_url VARCHAR(1500) NOT NULL,
     property_id INT NOT NULL,
     FOREIGN KEY (property_id) REFERENCES property(property_id));
-    
-ALTER TABLE photos
-	MODIFY photo_url VARCHAR(1500);
     
 CREATE TABLE category (
 	category_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -165,15 +162,12 @@ CREATE TABLE payment (
     payment_amount DECIMAL(10,2) NOT NULL,
     payment_date DATE NOT NULL,
     payment_method VARCHAR(100) NOT NULL,
-    payment_satus VARCHAR(100) NOT NULL);
-
-ALTER TABLE payment
-	RENAME COLUMN payment_satus TO payment_status;
+    payment_status VARCHAR(100) NOT NULL);
 
 CREATE TABLE booking (
 	booking_id INT PRIMARY KEY AUTO_INCREMENT,
     num_adult INT NOT NULL,
-    num_childen INT NOT NULL,
+    num_children INT NOT NULL,
     num_infant INT NOT NULL,
     num_pet INT NOT NULL,
     checkin_date DATE NOT NULL,
@@ -182,17 +176,13 @@ CREATE TABLE booking (
     service_fee DECIMAL(6,2) NOT NULL,
     cleaning_fee DECIMAL(6,2) NOT NULL,
     total_price DECIMAL(10,2) NOT NULL,
-    booking_satus VARCHAR(100) NOT NULL,
+    booking_status VARCHAR(100) NOT NULL,
     guest_id INT NOT NULL,
     FOREIGN KEY (guest_id) REFERENCES guest(guest_id),
     host_id INT NOT NULL,
     FOREIGN KEY (host_id) REFERENCES host(host_id),
     payment_id INT NOT NULL,
     FOREIGN KEY (payment_id) REFERENCES payment(payment_id));
-    
-ALTER TABLE booking
-	RENAME COLUMN num_childen TO num_children,
-    RENAME COLUMN booking_satus TO booking_status;
 
 CREATE TABLE rules (
 	rule_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -301,10 +291,6 @@ VALUES
     ('noahk@company.ca', 'kingmang1608', 2, NULL, NULL),
     ('whiter@gmail.com', 'snowwhite35', NULL, NULL, 19),
     ('mar1985@outlook.com', 'sealion85', NULL, 20, NULL);
-    
-
-INSERT INTO user (email, password, admin_id, guest_id, host_id)
-VALUES ('sophiec@company.ca', 'miniecooper43', 3, NULL, NULL);
 
 SELECT * FROM user;
 
@@ -759,9 +745,6 @@ WHERE payment_method = 'Credit Card' AND payment_status = 'Paid';
 SELECT COUNT(property_id)
 FROM property_rule
 WHERE rule_id = 1 OR rule_id = 10;
-
-ALTER TABLE host 
-	RENAME COLUMN sarted_hosting TO started_hosting;
 
 INSERT INTO host(first_name, last_name, date_of_birth, started_hosting)
 VALUES ('Sonia', 'Silva', '1993-05-18', '2024-03-23');
